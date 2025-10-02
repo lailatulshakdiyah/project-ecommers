@@ -1,0 +1,123 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Administrator"
+    },
+    {
+      "id": "2",
+      "username": "customer1",
+      "password": "password",
+      "role": "customer",
+      "name": "Lailatul"
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "name": "Jaemin Na",
+      "email": "jaeminna@example.com",
+      "phone": "081234567890",
+      "address": "Jl. Sudirman No. 256, Jakarta",
+      "balance": 150000,
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Jisung Kim",
+      "email": "jisungjii_@example.com",
+      "phone": "081234567891",
+      "address": "Jl. Thamrin No. 234, Jakarta",
+      "balance": 200000,
+      "createdAt": "2024-01-20T14:30:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Haechan Lee",
+      "email": "haechannahceah@example.com",
+      "phone": "081234567892",
+      "address": "Jl. Gatot Subroto No. 111, Jakarta",
+      "balance": 75000,
+      "createdAt": "2024-02-01T09:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Johny Suh",
+      "email": "johnsuhjohny@example.com",
+      "phone": "081234567893",
+      "address": "Jl. Kuningan No. 888, Jakarta",
+      "balance": 300000,
+      "createdAt": "2024-01-10T08:00:00Z"
+    }
+  ],
+  "packages": [
+    {
+      "id": "1",
+      "name": "Paket Internet 1GB",
+      "description": "Paket internet 1GB untuk 30 hari",
+      "price": 25000,
+      "data": "1GB",
+      "validity": "30 hari",
+      "category": "basic"
+    },
+    {
+      "id": "2",
+      "name": "Paket Internet 3GB",
+      "description": "Paket internet 3GB untuk 30 hari",
+      "price": 50000,
+      "data": "3GB",
+      "validity": "30 hari",
+      "category": "standard"
+    },
+    {
+      "id": "3",
+      "name": "Paket Internet 5GB",
+      "description": "Paket internet 5GB untuk 30 hari",
+      "price": 75000,
+      "data": "5GB",
+      "validity": "30 hari",
+      "category": "premium"
+    },
+    {
+      "id": "4",
+      "name": "Paket Internet 10GB",
+      "description": "Paket internet 10GB untuk 30 hari",
+      "price": 125000,
+      "data": "10GB",
+      "validity": "30 hari",
+      "category": "premium"
+    },
+    {
+      "id": "5",
+      "name": "Paket Internet Unlimited",
+      "description": "Paket internet unlimited untuk 30 hari",
+      "price": 200000,
+      "data": "Unlimited",
+      "validity": "30 hari",
+      "category": "unlimited"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "1",
+      "customerId": 1,
+      "packageId": 2,
+      "amount": 50000,
+      "status": "completed",
+      "paymentMethod": "balance",
+      "createdAt": "2024-02-10T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "customerId": 2,
+      "packageId": 1,
+      "amount": 25000,
+      "status": "completed",
+      "paymentMethod": "balance",
+      "createdAt": "2024-02-12T15:45:00Z"
+    }
+  ]
+}
