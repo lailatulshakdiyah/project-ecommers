@@ -1,4 +1,4 @@
-# DataPak Store - E-Commerce Paket Data Internet
+# Data'S Limit - Web E-Commerce Paket Data Internet
 
 Sebuah aplikasi web e-commerce untuk pembelian paket data internet yang dibangun dengan Next.js, TypeScript, Ant Design, dan JSON Server sebagai mock backend.
 
@@ -167,25 +167,6 @@ Database awal (`db.json`) sudah terisi dengan:
 - 3 customers dengan saldo berbeda
 - 5 paket data internet
 - 2 sample transactions
-
-## Future Enhancements
-
-- [ ] Real-time notifications
-- [ ] Payment gateway integration
-- [ ] Customer dashboard untuk self-service
-- [ ] Advanced reporting dan analytics
-- [ ] Email notifications
-- [ ] Customer wallet top-up
-- [ ] Package recommendations
-- [ ] Usage tracking
-
-## Contributing
-
-1. Fork the project
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
 
