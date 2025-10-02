@@ -1,4 +1,4 @@
-# DataPak Store - E-Commerce Paket Data Internet
+# Data'S Limit - Web E-Commerce Paket Data Internet
 
 Sebuah aplikasi web e-commerce untuk pembelian paket data internet yang dibangun dengan Next.js, TypeScript, Ant Design, dan JSON Server sebagai mock backend.
 
