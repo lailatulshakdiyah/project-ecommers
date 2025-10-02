@@ -168,25 +168,6 @@ Database awal (`db.json`) sudah terisi dengan:
 - 5 paket data internet
 - 2 sample transactions
 
-## Future Enhancements
-
-- [ ] Real-time notifications
-- [ ] Payment gateway integration
-- [ ] Customer dashboard untuk self-service
-- [ ] Advanced reporting dan analytics
-- [ ] Email notifications
-- [ ] Customer wallet top-up
-- [ ] Package recommendations
-- [ ] Usage tracking
-
-## Contributing
-
-1. Fork the project
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License.
