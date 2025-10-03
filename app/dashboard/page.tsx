@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Card, Row, Col, Statistic, Table, Tag, Button } from 'antd';
+import { useState, useEffect } from "react";
+import { Card, Row, Col, Statistic, Table, Tag, Button } from "antd";
 import {
   UserOutlined,
   ShoppingCartOutlined,
   DollarCircleOutlined,
   WifiOutlined,
-} from '@ant-design/icons';
-import { customerAPI, transactionAPI, packageAPI } from '../../lib/api';
-import { Customer, Transaction, Package } from '../../types';
-import DashboardLayout from '../../components/DashboardLayout';
-import { useAuth } from '../../hooks/useAuth';
-import Link from 'next/link';
+} from "@ant-design/icons";
+import { customerAPI, transactionAPI, packageAPI } from "../../lib/api";
+import { Customer, Transaction, Package } from "../../types";
+import DashboardLayout from "../../components/DashboardLayout";
+import { useAuth } from "../../hooks/useAuth";
+import Link from "next/link";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -22,93 +22,127 @@ const Dashboard = () => {
     totalRevenue: 0,
     totalPackages: 0,
   });
-  const [recentTransactions, setRecentTransactions] = useState<Transaction[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<Transaction[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadDashboardData();
   }, []);
 
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [customers, transactions, packages] = await Promise.all([
+      const [customersData, transactions, packagesData] = await Promise.all([
         customerAPI.getAll(),
         transactionAPI.getAll(),
         packageAPI.getAll(),
       ]);
 
       const totalRevenue = transactions
-        .filter(t => t.status === 'completed')
+        .filter((t) => t.status === "completed")
         .reduce((sum, t) => sum + t.amount, 0);
 
       setStats({
-        totalCustomers: customers.length,
+        totalCustomers: customersData.length,
         totalTransactions: transactions.length,
         totalRevenue,
-        totalPackages: packages.length,
+        totalPackages: packagesData.length,
       });
 
-      // Get recent 5 transactions
-      const recent = transactions
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-        .slice(0, 5);
-      
-      setRecentTransactions(recent);
+      // Sort transactions by ID (ascending order) and get recent 5
+      const sortedTransactions = transactions.sort((a, b) => {
+        const idA = typeof a.id === "string" ? parseInt(a.id) : a.id;
+        const idB = typeof b.id === "string" ? parseInt(b.id) : b.id;
+        return idB - idA; // Descending for recent transactions (newest first by ID)
+      });
+
+      setRecentTransactions(sortedTransactions.slice(0, 5));
+      setCustomers(customersData);
+      setPackages(packagesData);
     } catch (error) {
-      console.error('Error loading dashboard data:', error);
+      console.error("Error loading dashboard data:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const getCustomerName = (customerId: number | string) => {
+    const customer = customers.find((c) => c.id == customerId);
+    return customer ? customer.name : `Customer ${customerId}`;
+  };
+
+  const getPackageName = (packageId: number | string) => {
+    const pkg = packages.find((p) => p.id == packageId);
+    return pkg ? pkg.name : `Package ${packageId}`;
+  };
+
   const transactionColumns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      sorter: (a: Transaction, b: Transaction) => {
+        const idA = typeof a.id === "string" ? parseInt(a.id) : a.id;
+        const idB = typeof b.id === "string" ? parseInt(b.id) : b.id;
+        return idA - idB;
+      },
     },
     {
-      title: 'Customer ID',
-      dataIndex: 'customerId',
-      key: 'customerId',
+      title: "Customer",
+      dataIndex: "customerId",
+      key: "customerId",
+      render: (customerId: number | string) => getCustomerName(customerId),
     },
     {
-      title: 'Package ID',
-      dataIndex: 'packageId',
-      key: 'packageId',
+      title: "Package",
+      dataIndex: "packageId",
+      key: "packageId",
+      render: (packageId: number | string) => getPackageName(packageId),
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-      render: (amount: number) => `Rp ${amount.toLocaleString('id-ID')}`,
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+      render: (amount: number) => `Rp ${amount.toLocaleString("id-ID")}`,
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
       render: (status: string) => (
-        <Tag color={status === 'completed' ? 'green' : status === 'pending' ? 'orange' : 'red'}>
+        <Tag
+          color={
+            status === "completed"
+              ? "green"
+              : status === "pending"
+              ? "orange"
+              : "red"
+          }
+        >
           {status.toUpperCase()}
         </Tag>
       ),
     },
     {
-      title: 'Date',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (date: string) => new Date(date).toLocaleDateString('id-ID'),
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (date: string) => new Date(date).toLocaleDateString("id-ID"),
     },
   ];
 
   // Customer Dashboard
-  if (user?.role === 'customer') {
+  if (user?.role === "customer") {
     return (
       <DashboardLayout>
         <div>
           <h1 className="text-3xl font-bold mb-6">Welcome, {user.name}!</h1>
-          
+
           <Row gutter={[16, 16]} className="mb-6">
             <Col xs={24} md={12}>
               <Card
@@ -118,11 +152,15 @@ const Dashboard = () => {
                     <Button type="primary" size="large" block>
                       Browse Packages
                     </Button>
-                  </Link>
+                  </Link>,
                 ]}
               >
-                <p>Purchase internet data packages with your available balance.</p>
-                <p>Choose from our variety of packages suitable for your needs.</p>
+                <p>
+                  Purchase internet data packages with your available balance.
+                </p>
+                <p>
+                  Choose from our variety of packages suitable for your needs.
+                </p>
               </Card>
             </Col>
             <Col xs={24} md={12}>
@@ -133,10 +171,13 @@ const Dashboard = () => {
                     <Button type="default" size="large" block>
                       View Profile
                     </Button>
-                  </Link>
+                  </Link>,
                 ]}
               >
-                <p>View your profile information, balance, and transaction history.</p>
+                <p>
+                  View your profile information, balance, and transaction
+                  history.
+                </p>
                 <p>Keep track of your purchases and account details.</p>
               </Card>
             </Col>
@@ -151,7 +192,7 @@ const Dashboard = () => {
     <DashboardLayout>
       <div>
         <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-        
+
         <Row gutter={[16, 16]} className="mb-6">
           <Col xs={24} sm={12} lg={6}>
             <Card>
@@ -179,7 +220,9 @@ const Dashboard = () => {
                 title="Total Revenue"
                 value={stats.totalRevenue}
                 prefix={<DollarCircleOutlined />}
-                formatter={(value) => `Rp ${Number(value).toLocaleString('id-ID')}`}
+                formatter={(value) =>
+                  `Rp ${Number(value).toLocaleString("id-ID")}`
+                }
                 loading={loading}
               />
             </Card>

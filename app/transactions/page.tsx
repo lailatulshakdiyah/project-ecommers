@@ -30,7 +30,14 @@ const TransactionsPage = () => {
         packageAPI.getAll(),
       ]);
       
-      setTransactions(transactionsData);
+      // Sort transactions by ID (ascending order)
+      const sortedTransactions = transactionsData.sort((a, b) => {
+        const idA = typeof a.id === 'string' ? parseInt(a.id) : a.id;
+        const idB = typeof b.id === 'string' ? parseInt(b.id) : b.id;
+        return idA - idB;
+      });
+      
+      setTransactions(sortedTransactions);
       setCustomers(customersData);
       setPackages(packagesData);
     } catch (error) {
@@ -74,19 +81,19 @@ const TransactionsPage = () => {
       message.success('Transaction created successfully');
       setModalVisible(false);
       form.resetFields();
-      loadData();
+      await loadData(); // Ensure data is reloaded and sorted
     } catch (error) {
       message.error('Failed to create transaction');
     }
   };
 
-  const getCustomerName = (customerId: number) => {
-    const customer = customers.find(c => c.id === customerId);
+  const getCustomerName = (customerId: number | string) => {
+    const customer = customers.find(c => c.id == customerId); // Using == for loose comparison
     return customer ? customer.name : 'Unknown';
   };
 
-  const getPackageName = (packageId: number) => {
-    const pkg = packages.find(p => p.id === packageId);
+  const getPackageName = (packageId: number | string) => {
+    const pkg = packages.find(p => p.id == packageId); // Using == for loose comparison
     return pkg ? pkg.name : 'Unknown';
   };
 
@@ -95,18 +102,24 @@ const TransactionsPage = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
+      sorter: (a: Transaction, b: Transaction) => {
+        const idA = typeof a.id === 'string' ? parseInt(a.id) : a.id;
+        const idB = typeof b.id === 'string' ? parseInt(b.id) : b.id;
+        return idA - idB;
+      },
+      defaultSortOrder: 'ascend' as const,
     },
     {
       title: 'Customer',
       dataIndex: 'customerId',
       key: 'customerId',
-      render: (customerId: number) => getCustomerName(customerId),
+      render: (customerId: number | string) => getCustomerName(customerId),
     },
     {
       title: 'Package',
       dataIndex: 'packageId',
       key: 'packageId',
-      render: (packageId: number) => getPackageName(packageId),
+      render: (packageId: number | string) => getPackageName(packageId),
     },
     {
       title: 'Amount',

@@ -1,4 +1,4 @@
-# DataPak Store - Web E-Commerce Paket Data Internet
+# Data'S Limit - Web E-Commerce Paket Data Internet
 
 Sebuah aplikasi web e-commerce untuk pembelian paket data internet yang dibangun dengan Next.js, TypeScript, Ant Design, dan JSON Server sebagai mock backend.
 
@@ -10,6 +10,16 @@ Sebuah aplikasi web e-commerce untuk pembelian paket data internet yang dibangun
 - 💳 **Transaksi**: Sistem pembelian paket dengan validasi saldo
 - 📊 **Dashboard**: Overview statistik dan data transaksi terbaru
 - 📱 **Responsive Design**: Optimized untuk desktop dan mobile
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, TypeScript, React 19
+- **UI Library**: Ant Design
+- **Styling**: Tailwind CSS
+- **Font**: Roboto
+- **Backend**: JSON Server (Mock API)
+- **HTTP Client**: Axios
+- **State Management**: React Context & Hooks
 
 ## Prerequisites
 
