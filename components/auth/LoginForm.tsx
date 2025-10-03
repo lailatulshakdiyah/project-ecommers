@@ -36,7 +36,7 @@ const LoginForm = () => {
         title={
           <div className="text-center px-4 pt-6 pb-2">
             <h1 className="text-2xl font-bold text-blue-800 mb-2">
-              Data'S Limit
+              DataPak Store
             </h1>
             <p className="text-gray-600">Masuk ke akun Anda</p>
           </div>

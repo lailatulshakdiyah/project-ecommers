@@ -88,7 +88,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <Layout className="min-h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="h-16 flex items-center justify-center bg-blue-600 text-white text-lg font-bold">
-          {collapsed ? 'DsL' : "Data'S Limit"}
+          {collapsed ? 'DP' : "DataPak Store"}
         </div>
         <Menu
           theme="dark"

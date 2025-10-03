@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Data'S Limit - Web Internet Package E-Commerce",
+  title: "DataPak Store - Web Internet Package E-Commerce",
   description: "Buy internet data packages online",
 };
 
